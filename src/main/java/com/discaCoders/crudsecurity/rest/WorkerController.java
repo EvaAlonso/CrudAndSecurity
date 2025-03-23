@@ -2,8 +2,8 @@ package com.discaCoders.crudsecurity.rest;
 
 import com.discaCoders.crudsecurity.entity.Worker;
 import jakarta.annotation.PostConstruct;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +22,24 @@ public class WorkerController {
         workerList.add( new Worker( 2, "Eva", "Alonso"));
         workerList.add( new Worker( 3, "Miller", "Montaña"));
 
+    }
+    @GetMapping("/workers")
+    public List<Worker> allWorkers(){
+        return workerList;
+    }
+    @GetMapping("/workers/{workerId}")
+    public Worker getWorker(@PathVariable int workerId){
+        for(Worker worker: this.workerList){
+            if(worker.getId() == workerId){
+                return worker;
+            }
+        }
+        return null;
+    }
+    @PostMapping("/workers")
+    public Worker addWorker(@RequestBody Worker theWorker){
+        workerList.add(theWorker);
+        return theWorker;
     }
 
 }
