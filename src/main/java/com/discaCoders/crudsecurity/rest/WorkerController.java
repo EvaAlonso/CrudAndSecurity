@@ -41,5 +41,31 @@ public class WorkerController {
         workerList.add(theWorker);
         return theWorker;
     }
+    @PutMapping("/workers")
+    public Worker updateWorker(@RequestBody Worker theWorker) {
+
+        for(Worker worker: workerList) {
+
+            if (worker.getId() == theWorker.getId()) {
+
+                worker.setName(theWorker.getName());
+                worker.setSurname(theWorker.getSurname());
+
+            }
+
+        }
+
+        return theWorker;
+
+    }
+
+    @DeleteMapping("/workers/{workerId}")
+    public String deleteWorker(@PathVariable int workerId) {
+
+        this.workerList.removeIf(w -> w.getId() == workerId);
+
+        return "Borrado trabajador/a con ID: " + workerId;
+
+    }
 
 }
